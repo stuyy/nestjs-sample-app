@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { DatabaseModule } from './modules/database/database.module';
+import { AuthModule } from './modules/auth/auth.module';
 import environment from './config/environment';
 
 @Module({
@@ -11,6 +12,7 @@ import environment from './config/environment';
     UsersModule,
     MongooseModule.forRoot(environment.database),
     DatabaseModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

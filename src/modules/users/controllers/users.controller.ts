@@ -8,12 +8,14 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from '../services/users.service';
 import { UserDto } from '../dto/user.dto';
 import { UserValidationPipe } from '../pipes/user.pipe';
 import { UserDtoSchema } from '../schemas/UserDto.schema';
+import { AuthenticatedGuard } from 'src/modules/auth/guards/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -23,9 +25,10 @@ export class UsersController {
     this.userService = usersService;
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Get()
   @HttpCode(200)
-  async getUser(@Res() res: Response) {
+  async getUsers(@Res() res: Response) {
     return res.json(await this.userService.getUsers());
   }
 

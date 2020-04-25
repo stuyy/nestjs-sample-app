@@ -50,4 +50,8 @@ export class UsersService {
       return { error: 'Something went wrong.' };
     }
   }
+
+  async findUser(email: string): Promise<User> {
+    return this.userModel.findOne({ email });
+  }
 }
