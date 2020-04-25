@@ -5,6 +5,9 @@ import {
   Post,
   Body,
   UsePipes,
+  Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from '../services/users.service';
@@ -21,6 +24,7 @@ export class UsersController {
   }
 
   @Get()
+  @HttpCode(200)
   async getUser(@Res() res: Response) {
     return res.json(await this.userService.getUsers());
   }
@@ -29,6 +33,18 @@ export class UsersController {
   @UsePipes(new UserValidationPipe(UserDtoSchema))
   async createUser(@Body() user: UserDto,
   @Res() res: Response) {
-    return res.json(await this.userService.createUser(user));
+    return res
+      .status(HttpStatus.CREATED)
+      .json(await this.userService.createUser(user));
+  }
+
+  @Delete()
+  async deleteUser(
+    @Body('id') id: string,
+    @Res() res: Response,
+  ) {
+    return res
+      .status(HttpStatus.ACCEPTED)
+      .json(await this.userService.deleteUser(id));
   }
 }

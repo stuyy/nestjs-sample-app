@@ -9,5 +9,9 @@ export const UserDtoSchema = Joi.object({
     .required(),
   email: Joi
     .string()
+    .email()
+    .required(),
+  password: Joi
+    .string()
     .required(),
 });
